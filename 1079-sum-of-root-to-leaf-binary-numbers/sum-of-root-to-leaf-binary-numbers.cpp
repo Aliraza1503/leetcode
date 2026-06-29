@@ -11,11 +11,18 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,vector<int>&store,vector<vector<int>>&ans){
+    void solve(TreeNode* root,vector<int>store,int&ans){
         store.push_back(root->val);
         if(!root->left&&!root->right){
-            ans.push_back(store);
-            store.pop_back();
+            int n = store.size();
+            int sum =0;
+            int mul = 0;
+            for(int i =n-1;i>=0;i--){
+                sum+=pow(2,mul)*store[i];
+                mul++;
+            }
+            ans+=sum;
+            // store.pop_back();
             return ;
         }
         if(root->left){
@@ -24,24 +31,13 @@ public:
         if(root->right){
             solve(root->right,store,ans);
         }
-        store.pop_back();
+        // store.pop_back();
         return ;
     }
     int sumRootToLeaf(TreeNode* root) {
         vector<int> store;
-        vector<vector<int>> ans;
+        int ans=0;
         solve(root,store,ans);
-        int temp =0;
-        for(int i =0;i<ans.size();i++){
-            int n = ans[i].size();
-            int cap =0;
-            int st = 0;
-            for(int j=n-1;j>=0;j--){
-                cap+=pow(2,st)*ans[i][j];
-                st++;
-            }
-            temp+=cap;
-        }
-        return temp;
+        return ans;
     }
 };

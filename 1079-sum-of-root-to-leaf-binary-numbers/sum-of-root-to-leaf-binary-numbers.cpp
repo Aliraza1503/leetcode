@@ -22,7 +22,7 @@ public:
                 mul++;
             }
             ans+=sum;
-            // store.pop_back();
+            store.pop_back();
             return ;
         }
         if(root->left){
@@ -31,7 +31,7 @@ public:
         if(root->right){
             solve(root->right,store,ans);
         }
-        // store.pop_back();
+        store.pop_back();
         return ;
     }
     int sumRootToLeaf(TreeNode* root) {

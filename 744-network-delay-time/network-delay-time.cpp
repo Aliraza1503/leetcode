@@ -16,7 +16,9 @@ public:
         while(!pq.empty()){
             int dist = pq.top().first;
             int node = pq.top().second;
+          
             pq.pop();
+              if(dist>store[node]) continue;
             for(auto it:adj[node]){
                 int adjnode = it.first;
                 int wt = it.second;

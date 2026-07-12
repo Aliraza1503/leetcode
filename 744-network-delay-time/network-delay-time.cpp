@@ -7,10 +7,10 @@ public:
         pq.push({0,k});
         unordered_map<int,vector<pair<int,int>>> adj;
         int m = times.size();
-        for(int i =0;i<m;i++){
-                int src = times[i][0];
-                int dest = times[i][1];
-                int val = times[i][2];
+        for(auto it:times){
+                int src = it[0];
+                int dest = it[1];
+                int val = it[2];
                 adj[src].push_back({dest,val}); 
         }
         while(!pq.empty()){

@@ -7,7 +7,7 @@ public:
         int take =0;
         if(dp[i][j]!=-1) return dp[i][j];
         if(s1[i]==s2[j]){
-            take = 2*s1[i]+solve(i+1,j+1,s1,s2);
+            take = s1[i]+solve(i+1,j+1,s1,s2);
         }
         int takeleft = solve(i+1,j,s1,s2);
         int takeright = solve(i,j+1,s1,s2);
@@ -25,6 +25,6 @@ public:
             s2val+=it;
         }
         memset(dp,-1,sizeof(dp));
-        return s1val+s2val-solve(0,0,s1,s2);
+        return s1val+s2val-2*solve(0,0,s1,s2);
     }
 };

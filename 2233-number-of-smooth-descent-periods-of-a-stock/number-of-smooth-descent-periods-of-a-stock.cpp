@@ -7,7 +7,6 @@ public:
         long long tot =0;
         for(int i =1;i<n;i++){
             if(check-prices[i]==1){
-               check=prices[i];
                 val+=1;
                 val+=tot;
                 tot++;
@@ -15,8 +14,8 @@ public:
             }
             else{
                 tot =0;
-                check=prices[i];
             }
+             check=prices[i];
         }
         return val;
     }

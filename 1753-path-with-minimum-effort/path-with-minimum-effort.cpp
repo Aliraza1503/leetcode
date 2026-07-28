@@ -4,44 +4,30 @@ public:
         int n = heights.size();
         int m = heights[0].size();
         vector<vector<int>> store(n,vector<int>(m,INT_MAX));
-       
-      priority_queue< pair<int,pair<int,int>>,vector< pair<int,pair<int,int>>>,greater< pair<int,pair<int,int>>>> pq;
-      pq.push({0,{0,0}});
-      store[0][0]=0;
-      while(!pq.empty()){
-        int val = pq.top().first;
-        int r = pq.top().second.first;
-        int c = pq.top().second.second;
-        pq.pop();
-        if(c+1<m){
-            int diff = abs(heights[r][c]-heights[r][c+1]);
-            if(max(diff,val)<store[r][c+1]){
-                store[r][c+1]=max(diff,val);
-                pq.push({max(diff,val),{r,c+1}});
+        store[0][0]=0;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> pq;
+        pq.push({0,{0,0}});
+        vector<int> row = {-1,0,1,0};
+        vector<int> col = {0,1,0,-1};
+        while(!pq.empty()){
+            auto it = pq.top();
+            pq.pop();
+            int cur = it.first;
+            int i = it.second.first;
+            int j = it.second.second;
+            if(cur>store[i][j]) continue;
+            for(int k=0;k<4;k++){
+                int p = i+row[k];
+                int q = j+col[k];
+                if(p>=0&&p<n&&q>=0&&q<m){
+                    int val =max(cur,abs(heights[p][q]-heights[i][j]));
+                    if(store[p][q]>val){
+                        store[p][q]=val;
+                        pq.push({val,{p,q}});
+                    }
+                }
             }
         }
-        if(r+1<n){
-            int diff = abs(heights[r][c]-heights[r+1][c]);
-            if(max(diff,val)<store[r+1][c]){
-                store[r+1][c]=max(diff,val);
-                pq.push({max(diff,val),{r+1,c}});
-            }
-        }
-        if(c-1>=0){
-            int diff = abs(heights[r][c-1]-heights[r][c]);
-            if(max(diff,val)<  store[r][c-1]){
-                store[r][c-1]=max(diff,val);
-                pq.push({max(diff,val),{r,c-1}});
-            }
-        }
-        if(r-1>=0){
-            int diff = abs(heights[r-1][c]-heights[r][c]);
-            if(  max(diff,val)< store[r-1][c]){
-               store[r-1][c] =max(diff,val);
-                pq.push({max(diff,val),{r-1,c}});
-            }
-        }
-      }
-      return store[n-1][m-1];
+        return store[n-1][m-1];
     }
 };

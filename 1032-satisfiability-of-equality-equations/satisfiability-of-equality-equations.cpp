@@ -32,12 +32,15 @@ public:
                 if(it[1]=='='){
                     unionn(it[0]-'a',it[3]-'a');
                 }
-            }
-            for(auto it:equations){
-                if(it[1]=='!'){
+               else  if(it[1]=='!'){
                     if(find(it[0]-'a')==find(it[3]-'a')) return false;
                 }
             }
+            // for(auto it:equations){
+            //     if(it[1]=='!'){
+            //         if(find(it[0]-'a')==find(it[3]-'a')) return false;
+            //     }
+            // }
         }
         return true;
     }

@@ -8,6 +8,9 @@ public:
             }
         }
     }
+    void bfs(int node,unordered_map<int,vector<int>>&adj,vector<int>&vis){
+        
+    }
     int findCircleNum(vector<vector<int>>& nums) {
          unordered_map<int,vector<int>>adj;
          int n = nums.size();
@@ -22,11 +25,25 @@ public:
         
         vector<int> vis(n,0);
         int ans =0;
+        queue<int> q;
+        
         for(int i =0;i<n;i++){
             if(vis[i]==0){
-                dfs(i,adj,vis);
-                ans++;
+           q.push(i); 
+            while(!q.empty()){
+                int val = q.front();
+                vis[val]=1;
+                q.pop();
+                for(auto it:adj[val]){
+                    if(vis[it]==0){
+                        q.push(it);
+                        vis[it]=1;
+                    }
+                }
             }
+            ans++;
+            }
+
         }
         return ans;
     }

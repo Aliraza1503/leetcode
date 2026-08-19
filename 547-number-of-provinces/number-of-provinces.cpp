@@ -1,19 +1,35 @@
 class Solution {
 public:
-    void dfs(int node,unordered_map<int,vector<int>>&adj,vector<int>&vis){
-        vis[node]=1;
-        for(auto it:adj[node]){
-            if(vis[it]==0){
-                dfs(it,adj,vis);
-            }
-        }
+    vector<int> rank;
+    vector<int> parent;
+    int find(int x){
+        if(parent[x]==x) return x;
+        return parent[x]=find(parent[x]);
     }
-    void bfs(int node,unordered_map<int,vector<int>>&adj,vector<int>&vis){
-        
+    int unio(int x,int y){
+        int xp = find(x);
+        int yp = find(y);
+        if(xp==yp) return 1;
+        if(rank[xp]>rank[yp]){
+            parent[yp]=xp;
+        }
+        else if(rank[xp]<rank[yp]){
+            parent[xp]=yp;
+        }
+        else{
+            parent[xp]=yp;
+            rank[yp]++;
+        }
+        return 0;
     }
     int findCircleNum(vector<vector<int>>& nums) {
-         unordered_map<int,vector<int>>adj;
-         int n = nums.size();
+        int n = nums.size();
+        rank.resize(n,0);
+        parent.resize(n);
+        for(int i =0;i<n;i++){
+            parent[i]=i;
+        }
+        unordered_map<int,vector<int>> adj;
         for(int i =0;i<n;i++){
             for(int j =0;j<n;j++){
                 if(i!=j&&nums[i][j]==1){
@@ -22,28 +38,13 @@ public:
                 }
             }
         }
-        
-        vector<int> vis(n,0);
-        int ans =0;
-        queue<int> q;
-        
+        int ans =n;
         for(int i =0;i<n;i++){
-            if(vis[i]==0){
-           q.push(i); 
-            while(!q.empty()){
-                int val = q.front();
-                vis[val]=1;
-                q.pop();
-                for(auto it:adj[val]){
-                    if(vis[it]==0){
-                        q.push(it);
-                        vis[it]=1;
-                    }
+            for(auto it:adj[i]){
+                if(unio(i,it)==0){
+                    ans--;
                 }
             }
-            ans++;
-            }
-
         }
         return ans;
     }

@@ -12,6 +12,11 @@ public:
     int minCostClimbingStairs(vector<int>& cost) {
         n = cost.size();
         memset(dp,-1,sizeof(dp));
-        return min(solve(0,cost),solve(1,cost));
+        // return min(solve(0,cost),solve(1,cost));
+        vector<int> dpp(n+2,0);
+        for(int i=n-1;i>=0;i--){
+            dpp[i]=cost[i]+min(dpp[i+1],dpp[i+2]);
+        }
+        return min(dpp[0],dpp[1]);
     }
 };

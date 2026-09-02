@@ -11,21 +11,32 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        vector<int> store;
-        ListNode* temp = head;
-        store.push_back(temp->val);
-        while(temp->next!=NULL){
-            store.push_back(temp->next->val);
-            temp = temp->next;
+        //my approach would be like check for odd palindrome 
+
+        ListNode* first = head;
+        ListNode* second = head;
+       
+        while(second->next!=NULL&&second->next->next!=NULL){
+        
+            first = first->next;
+            second = second->next->next;
         }
-        int n = store.size();
-        int i=0;
-        int j =n-1;
-        while(i<=j){
-        if(store[i]!=store[j]) return false;
-        i++;
-        j--;
-        }
-        return true;
+      second = first->next;
+      ListNode* prev = NULL;
+    
+      while(second!=NULL){
+      ListNode*  nnext = second->next;
+        second->next = prev;
+        prev = second;
+        second = nnext;
+      }
+
+      ListNode* temp = head;
+      while(prev!=NULL){
+        if(prev->val!=temp->val) return false;
+        prev = prev->next;
+        temp = temp->next;
+      }
+      return true;
     }
 };

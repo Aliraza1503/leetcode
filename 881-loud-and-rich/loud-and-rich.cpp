@@ -24,7 +24,7 @@ public:
         }
         for(int i=0;i<n;i++){
             int val = INT_MAX;
-            int ans = INT_MAX;
+            int ans = i;
             vector<int> vis(n,0);
            dfs(i,mp,val,ans,vis,quiet);
            if(ans!=INT_MAX){

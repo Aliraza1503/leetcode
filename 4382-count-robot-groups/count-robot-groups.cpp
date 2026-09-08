@@ -20,15 +20,14 @@ public:
             int curpos = position[i];
             int curspeed = speed[i];
             if(prevpos-curpos<=distance||curspeed>prevspeed){
-                i--;
-                prevpos = curpos;     
+                  
             } 
             else {
                 ans++;
-                i--;
-                prevpos = curpos;
                 prevspeed = curspeed;
             }
+               prevpos = curpos;
+               i--;
         }
         return ans;
     }

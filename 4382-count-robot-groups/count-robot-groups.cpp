@@ -19,16 +19,10 @@ public:
         while(i>=0){
             int curpos = position[i];
             int curspeed = speed[i];
-            if(prevpos-curpos<=distance){
+            if(prevpos-curpos<=distance||curspeed>prevspeed){
                 i--;
-                prevpos = curpos;
-                
-            }
-            else if(curspeed>prevspeed){
-                i--;
-                prevpos = curpos;
-                
-            }
+                prevpos = curpos;     
+            } 
             else {
                 ans++;
                 i--;

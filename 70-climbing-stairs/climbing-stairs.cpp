@@ -1,13 +1,14 @@
 class Solution {
 public:
-    int dp[46];
-    int solve(int n){
-        if(n<=1) return 1;
-        if(dp[n]!=-1) return dp[n];
-        return dp[n]= solve(n-1)+solve(n-2);
+    int sum(int x,int y) {
+        return x+y;
     }
     int climbStairs(int n) {
-        memset(dp,-1,sizeof(dp));
-        return solve(n);
+        //top down me 2 se 1 and 0 gya initially 1 and zero pe 1 value tha next value is sum of prev two 
+        vector<int> store(n+1,1);
+        for(int i=2;i<=n;i++){
+            store[i]=sum(store[i-1],store[i-2]);
+        }
+        return store[n];
     }
 };

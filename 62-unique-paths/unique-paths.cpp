@@ -1,17 +1,16 @@
 class Solution {
 public:
+    int dp[101][101];
+    int solve(int i,int j,int m,int n){
+        if(i>=n||j>=m) return 0;
+        if(i==n-1&&j==m-1) return 1;
+        if(dp[i][j]!=-1) return dp[i][j];
+        int right = solve(i+1,j,m,n);
+        int down = solve(i,j+1,m,n);
+        return dp[i][j]= right + down;
+    }
     int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(n,vector<int>(m,0));
-        dp[0][0]=1;
-        for(int i=0;i<n;i++){
-            for(int j =0;j<m;j++){
-                if(i==0&&j==0){continue;}
-            
-            int right = (i-1>=0)?dp[i-1][j]:0;
-            int down = (j-1>=0)?dp[i][j-1]:0;
-            dp[i][j]=right+down;
-        }
-        }
-        return dp[n-1][m-1];
+        memset(dp,-1,sizeof(dp));
+        return solve(0,0,m,n);
     }
 };

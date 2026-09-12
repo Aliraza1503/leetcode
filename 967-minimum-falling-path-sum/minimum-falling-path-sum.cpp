@@ -24,10 +24,10 @@ public:
         }
         for(int i=1;i<n;i++){
             for(int j=0;j<n;j++){
-                int up = matrix[i][j]+dp[i-1][j];
-                int left = matrix[i][j]+(j>0?dp[i-1][j-1]:1e5);
-                int right = matrix[i][j]+(j<n-1?dp[i-1][j+1]:1e5);
-                dp[i][j]=min({up,left,right});
+                int up = dp[i-1][j];
+                int left = j>0?dp[i-1][j-1]:1e5;
+                int right = j<n-1?dp[i-1][j+1]:1e5;
+                dp[i][j]=matrix[i][j]+ min({up,left,right});
             }
         }
         for(int i=0;i<n;i++){

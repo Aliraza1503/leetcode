@@ -14,12 +14,12 @@ public:
         if(rem<0) rem+=k;
         if(mp.find(rem)!=mp.end()){
             ans = max(ans,i-mp[rem]);
-            // if(ans>=2) return true;
+            if(ans>=2) return true;
         }
        else{ 
          mp[rem]=i;
        }
        }
-       return ans>=2;
+       return false;
     }
 };

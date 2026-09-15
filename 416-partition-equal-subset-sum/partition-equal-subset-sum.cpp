@@ -21,9 +21,24 @@ public:
         }
         if(val%2!=0) return false;
         int tar = val/2;
-        memset(dp,-1,sizeof(dp));
-        return solve(0,tar,nums);
-        int n = nums.size();
-        vector<vector<bool>> dp(n,vector<bool>(tar,0));
+        // memset(dp,-1,sizeof(dp));
+        // return solve(0,tar,nums);
+        vector<vector<bool>> dp(n+1,vector<bool>(tar+1,false));
+        //target zero will give the true result
+        for(int i=0;i<=n;i++){
+            dp[i][0]=true;
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int t=1;t<=tar;t++){
+                bool ntake = dp[i+1][t];
+                bool take = false;
+                if(t>=nums[i]){
+                    take = dp[i+1][t-nums[i]];
+                }
+                dp[i][t]=take||ntake;
+            }
+        }
+            return dp[0][tar];// the end value of the table rightmost bottom 
+       
     }
 };

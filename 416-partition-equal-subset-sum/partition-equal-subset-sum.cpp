@@ -23,5 +23,7 @@ public:
         int tar = val/2;
         memset(dp,-1,sizeof(dp));
         return solve(0,tar,nums);
+        int n = nums.size();
+        vector<vector<bool>> dp(n,vector<bool>(tar,0));
     }
 };

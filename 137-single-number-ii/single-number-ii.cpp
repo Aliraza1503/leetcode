@@ -1,20 +1,16 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        int res =0;
-        for(int k=0;k<=31;k++){
-            int countzero = 0;
-            int countone =0;
-            int temp = (1<<k);
-            for(auto num:nums){
-                if((num&temp)==0) countzero++;
-                else
-                    countone++;
+        int ans =0;
+        for(int i=0;i<32;i++){
+            int cnt =0;
+            for(auto it:nums){
+                if(it&(1<<i)) cnt++;
             }
-            if(countone%3==1){
-                res = res|temp;
+            if(cnt%3!=0){
+                ans|=(1<<i);
             }
         }
-        return res;
+        return ans;
     }
 };

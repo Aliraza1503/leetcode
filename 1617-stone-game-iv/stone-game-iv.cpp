@@ -14,7 +14,17 @@ public:
        // if 1 alice wins 
        /*
        */ 
-        memset(dp,-1,sizeof(dp));
-      return solve(n);
+        // memset(dp,-1,sizeof(dp));
+    //   return solve(n);
+    vector<bool> store(n+1,false);
+    for(int i=0;i<n+1;i++){
+        for(int val =1;val*val<=i;val++){
+            if(store[i-val*val]==false){
+                store[i]=true;
+                break;
+            }
+        }
+    }
+     return store[n]==true;
     }
 };

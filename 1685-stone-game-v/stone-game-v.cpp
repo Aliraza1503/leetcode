@@ -14,16 +14,16 @@ public:
         for(int p=i;p<=j;p++){
             cursum+=nums[p];
             if(cursum<(sum-cursum)){
-                int val=cursum+solve(i,p,nums);
-                result = max(result,val);
+                // int val=cursum+solve(i,p,nums);
+                result = max(result,cursum+solve(i,p,nums));
             }
             else if(cursum==sum-cursum){
-                    int val = cursum+max(solve(i,p,nums),solve(p+1,j,nums));
-                    result = max(result,val);
+                    // int val = cursum+max(solve(i,p,nums),solve(p+1,j,nums));
+                    result = max(result,cursum+max(solve(i,p,nums),solve(p+1,j,nums)));
             }
             else{
-                int val = (sum-cursum)+solve(p+1,j,nums);
-                result = max(result,val);
+                // int val = (sum-cursum)+solve(p+1,j,nums);
+                result = max(result, (sum-cursum)+solve(p+1,j,nums));
             }
         }
         return dp[i][j]= result;

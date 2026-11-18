@@ -1,51 +1,46 @@
 class Solution {
 public:
-    vector<int> rank;
-    vector<int> parent;
-    int find(int x){
-        if(parent[x]==x) return x;
-        return parent[x]=find(parent[x]);
+    void solve(int node,vector<bool>&vis,vector<vector<int>>&adj){
+        vis[node]=true;
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                solve(it,vis,adj);
+            }
+        }
     }
-    int unio(int x,int y){
-        int xp = find(x);
-        int yp = find(y);
-        if(xp==yp) return 1;
-        if(rank[xp]>rank[yp]){
-            parent[yp]=xp;
-        }
-        else if(rank[xp]<rank[yp]){
-            parent[xp]=yp;
-        }
-        else{
-            parent[xp]=yp;
-            rank[yp]++;
-        }
-        return 0;
-    }
-    int findCircleNum(vector<vector<int>>& nums) {
-        int n = nums.size();
-        rank.resize(n,0);
-        parent.resize(n);
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        vector<vector<int>> adj(n);
         for(int i =0;i<n;i++){
-            parent[i]=i;
-        }
-        unordered_map<int,vector<int>> adj;
-        for(int i =0;i<n;i++){
-            for(int j =0;j<n;j++){
-                if(i!=j&&nums[i][j]==1){
-                    adj[i].push_back(j);
-                    adj[j].push_back(i);
+            for(int j=0;j<n;j++){
+                if(i!=j&&isConnected[i][j]==1){
+                adj[i].push_back(j);
+                adj[j].push_back(i);
                 }
             }
         }
-        int ans =n;
+        vector<bool> vis(n,false);
+        queue<int> q;
+        int cnt =0;
         for(int i =0;i<n;i++){
-            for(auto it:adj[i]){
-                if(unio(i,it)==0){
-                    ans--;
-                }
+            if(!vis[i]){
+                cnt++;
+                solve(i,vis,adj);
+                // q.push(i);
+                // vis[i]=true;
+                // while(!q.empty()){
+                //     int val = q.front();
+             
+                //     q.pop();
+                //     for(auto it:adj[val]){
+                //         if(!vis[it]){
+                //             q.push(it);
+                //             vis[it]=true;
+                //         }
+                //     }
+                // }
             }
         }
-        return ans;
+        return cnt;
     }
 };

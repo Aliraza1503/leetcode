@@ -1,5 +1,14 @@
 class Solution {
 public:
+    void solve(int node,vector<bool>&vis,vector<vector<int>>&adj,long long &cnt){
+        vis[node]=true;
+        cnt++;
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                solve(it,vis,adj,cnt);
+            }
+        }
+    }
     long long countPairs(int n, vector<vector<int>>& edges) {
         vector<vector<int>> adj(n);
         for(auto it:edges){
@@ -9,25 +18,31 @@ public:
         vector<bool> vis(n,false);
         long long ans = 1LL*n*(n-1)/2;
         for(int i =0;i<n;i++){
-            queue<int> q;
             if(!vis[i]){
-                q.push(i);
-                vis[i]=true;
-                int cnt =0;
-                while(!q.empty()){
-                    int val = q.front();
-                    q.pop();
-                    cnt++;
-                    for(auto it:adj[val]){
-                        if(!vis[it]){
-                        vis[it]=true;
-                        q.push(it);
-                        }
-                    }
-                }
-                long long temp = 1LL*cnt*(cnt-1)/2;
-                ans-=temp;
+                long long cnt =0;
+                solve(i,vis,adj,cnt);
+                     ans-=(cnt*(cnt-1)/2);
             }
+       
+            // queue<int> q;
+            // if(!vis[i]){
+            //     q.push(i);
+            //     vis[i]=true;
+            //     int cnt =0;
+            //     while(!q.empty()){
+            //         int val = q.front();
+            //         q.pop();
+            //         cnt++;
+            //         for(auto it:adj[val]){
+            //             if(!vis[it]){
+            //             vis[it]=true;
+            //             q.push(it);
+            //             }
+            //         }
+            //     }
+            //     long long temp = 1LL*cnt*(cnt-1)/2;
+            //     ans-=temp;
+            // }
         }
         return ans;
     }

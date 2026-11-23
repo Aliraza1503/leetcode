@@ -1,15 +1,5 @@
 class Solution {
 public:
-    int dfs(int curr, int parent, vector<vector<pair<int, int>>>& adj) {
-        int changes = 0;
-        for (auto& [next, cost] : adj[curr]) {
-            if (next != parent) {
-                changes += cost + dfs(next, curr, adj);
-            }
-        }
-        return changes;
-    }
-
     int minReorder(int n, vector<vector<int>>& connections) {
         // {neighbor, cost}: cost is 1 for original direction (away from 0), 0 for reverse
         vector<vector<pair<int, int>>> adj(n);
@@ -17,7 +7,27 @@ public:
             adj[edge[0]].push_back({edge[1], 1});
             adj[edge[1]].push_back({edge[0], 0});
         }
+
+        queue<int> q;
+        vector<bool> vis(n, false);
         
-        return dfs(0, -1, adj);
+        q.push(0);
+        vis[0] = true;
+        
+        int changes = 0;
+        while (!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            
+            for (auto& [next, cost] : adj[curr]) {
+                if (!vis[next]) {
+                    vis[next] = true;
+                    changes += cost;
+                    q.push(next);
+                }
+            }
+        }
+        
+        return changes;
     }
 };

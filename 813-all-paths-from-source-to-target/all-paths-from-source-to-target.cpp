@@ -4,12 +4,7 @@ public:
     void solve(int node,vector<int> store,vector<vector<int>>&graph,vector<vector<int>>&ans){
         for(auto it:graph[node]){
             store.push_back(it);
-            if(it==n-1){
-                ans.push_back(store);
-            }
-            else{
-                solve(it,store,graph,ans);
-            }
+            it==n-1?ans.push_back(store):solve(it,store,graph,ans);
             store.pop_back();
         }
     }
